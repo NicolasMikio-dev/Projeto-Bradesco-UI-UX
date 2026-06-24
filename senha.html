@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bradesco - Crie sua Senha</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: white;
+            color: black;
+        }
+
+        header {
+            background-color: #cc0000;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-header {
+            width: 50px;
+            filter: brightness(0) invert(1);
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        .lado-esquerdo {
+            width: 45%;
+            position: relative;
+            background-color: #e8001c; 
+            clip-path: polygon(0 0, 100% 0, 75% 100%, 0 100%);
+        }
+
+        .lado-direito {
+            width: 55%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 60px 190px 60px 60px; 
+        }
+
+        h1 {
+            color: #e8001c;
+            font-size: 48px;
+            font-weight: bold;
+            text-align: right;
+            margin-bottom: 40px;
+        }
+
+        .formulario {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            align-items: flex-end;
+        }
+
+        .campo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .campo label {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: right;
+            min-width: 200px;
+        }
+
+        .campo input {
+            width: 280px;
+            padding: 8px 0;
+            border: none;
+            border-bottom: 2px solid black;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .btn-proximo {
+            background-color: #e8001c;
+            color: white;
+            border: none;
+            padding: 18px 60px;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .btn-proximo:hover {
+            background-color: #b0001a;
+            transition: 0.3s;
+        }
+
+        .foto-formulario {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            clip-path: polygon(0 0, 92% 0, 67% 100%, 0 100%);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="imagens/icone-bradesco.png" alt="Bradesco" class="logo-header">
+    </header>
+
+<div class="container">
+
+    <div class="lado-esquerdo">
+        <img src="imagens/puff.png" alt="pessoa" class="foto-formulario">
+    </div>
+
+
+    <div class="lado-direito">
+        <h1>Crie sua senha <br> de acesso</h1>
+        
+
+
+        <div class="formulario">
+            <div class="campo">
+                <label>Sua senha</label>
+                <input type="password" id="senha" maxlength="6" placeholder="Mínimo de 6 números">
+                <button type="button" id="btnOlho" style="cursor: pointer; background: none; border: none; font-size: 16px;">👁️</button>
+            </div>
+            
+            <div class="campo">
+                <label>Confirme sua senha</label>
+                <input type="password" id="confirmaSenha" maxlength="6" placeholder="Repita a senha">
+                <button type="button" id="btnOlhoConfirma" style="cursor: pointer; background: none; border: none; font-size: 16px;">👁️</button>
+            </div>
+            
+            <button class="btn-proximo" id="btnFinalizar">FINALIZAR CADASTRO</button>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+    // Seleciona o botão e os campos de senha
+    const btnFinalizar = document.getElementById('btnFinalizar');
+    const inputSenha = document.getElementById('senha');
+    const inputConfirma = document.getElementById('confirmaSenha');
+
+    btnFinalizar.addEventListener('click', function(e) {
+        
+        const senha = inputSenha.value;
+        const confirma = inputConfirma.value;
+
+        if (senha === "" || confirma === "") {
+            alert('Por favor, preencha os dois campos de senha.');
+            e.preventDefault();
+            return;
+        }
+
+        if (senha.length < 6) {
+            alert('A senha deve ter pelo menos 6 caracteres por segurança.');
+            e.preventDefault();
+            return;
+        }
+
+        if (senha !== confirma) {
+            alert('As senhas não coincidem! Digite novamente.');
+            e.preventDefault();
+            return;
+        }
+
+        // 1. Função que sorteia os números bancários
+        function gerarNumero(tamanho) {
+            let numero = '';
+            for(let i = 0; i < tamanho; i++) {
+                numero += Math.floor(Math.random() * 10);
+            }
+            return numero;
+        }
+
+        // 2. Sorteia Agência, Conta e Dígito
+        const novaAgencia = gerarNumero(4);
+        const novaConta = gerarNumero(7);
+        const novoDigito = gerarNumero(1);
+
+        // 3. Resgata os dados da Página 2
+        const nomeSalvo = localStorage.getItem('cadastroNome');
+        const cpfSalvo = localStorage.getItem('cadastroCpf');
+        const telefoneSalvo = localStorage.getItem('cadastroTelefone');
+
+        // 4. Cria o perfil completo do cliente
+        const novoCliente = {
+            nome: nomeSalvo || "Usuário",
+            cpf: cpfSalvo,
+            telefone: telefoneSalvo,
+            senha: senha,
+            agencia: novaAgencia,
+            conta: novaConta,
+            digito: novoDigito
+        };
+
+        // 5. Salva na lista de clientes
+        let listaClientes = JSON.parse(localStorage.getItem("listaClientes")) || [];
+        listaClientes.push(novoCliente);
+        localStorage.setItem("listaClientes", JSON.stringify(listaClientes));
+
+        // 6. Mostra os dados para o usuário e manda para o Login (Parte 1)
+        alert(`Parabéns, ${novoCliente.nome}!\nGuarde seus dados de acesso:\nAgência: ${novaAgencia}\nConta: ${novaConta}-${novoDigito}`);
+        
+        // Coloque aqui o nome exato do seu arquivo da Parte 1 (ex: index.html)
+        window.location.href = 'part1.html';
+    });
+
+    // No campo Senha, removemos tudo o que NÃO for número
+document.getElementById("senha").addEventListener("input", function() {
+    this.value = this.value.replace(/[^0-9]/g, "");
+});
+
+// --- Lógica para o Olhinho (Mostrar/Ocultar Senha) ---
+const btnOlho = document.getElementById("btnOlho");
+const campoSenha = document.getElementById("senha");
+
+btnOlho.addEventListener("click", function() {
+    if (campoSenha.type === "password") {
+        campoSenha.type = "text"; // Revela a senha
+    } else {
+        campoSenha.type = "password"; // Oculta a senha novamente
+    }
+});
+
+// Remove tudo o que NÃO for número do campo Confirme Senha
+document.getElementById("confirmaSenha").addEventListener("input", function() {
+    this.value = this.value.replace(/[^0-9]/g, "");
+});
+
+// Lógica para o segundo Olhinho (Confirme Senha)
+const btnOlhoConfirma = document.getElementById("btnOlhoConfirma");
+const campoConfirmaSenha = document.getElementById("confirmaSenha");
+
+btnOlhoConfirma.addEventListener("click", function() {
+    if (campoConfirmaSenha.type === "password") {
+        campoConfirmaSenha.type = "text"; 
+    } else {
+        campoConfirmaSenha.type = "password"; 
+    }
+});
+
+
+</script>
+</body>
+</html>

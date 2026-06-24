@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bradesco</title>
+
+    <style>
+        /* ======================================================= */
+        /* RESET E CONFIGURAÇÕES GERAIS                            */
+        /* ======================================================= */
+        
+        html {
+    scroll-behavior: smooth; /* Faz a rolagem ser suave */
+    scroll-padding-top: 60px; /* Evita que o menu fixo cubra o título */
+}
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            color: white;
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 100% 40%, #8b0000 0%, #1a0000 50%);
+            transition: background 0.5s ease;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* ======================================================= */
+        /* BARRA DE LOGIN SUPERIOR                                 */
+        /* ======================================================= */
+        .barra-login {
+            background-color: #cc0000;
+            padding: 0.6vw 5vw;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: clamp(10px, 0.8vw, 14px);
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .login-esquerdo {
+            display: flex;
+            align-items: center;
+            gap: 0.8vw;
+        }
+
+        .input-login {
+            width: 6vw;
+            padding: 4px 8px;
+            border: none;
+            border-radius: 20px;
+        }
+
+        .input-digito {
+            width: 3vw;
+            padding: 4px 8px;
+            border: none;
+            border-radius: 20px;
+        }
+
+        .btn-ok {
+            background-color: #cc0000;
+            color: white;
+            border: 2px solid white;
+            padding: 4px 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 0;
+        }
+
+        .como-usar {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .como-usar:hover { color: #7a0000; }
+
+        .separador {
+            width: 1px;
+            height: 20px;
+            background-color: white;
+            opacity: 0.5;
+        }
+
+        .login-direito {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .login-direito a {
+            color: white;
+            text-decoration: none;
+            font-size: clamp(10px, 0.8vw, 14px);
+        }
+
+        .login-direito a:hover {
+            color: #7a0000;
+            transition: 0.3s;
+        }
+
+        .input-login:hover, .input-digito:hover {
+            outline: 2px solid #7a0000;
+            border-radius: 20px;
+        }
+
+        /* ======================================================= */
+        /* CABEÇALHO (HEADER)                                      */
+        /* ======================================================= */
+        header {
+            padding: 1vh 5vw;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo { width: clamp(120px, 14vw, 220px); }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2vw;
+            font-size: clamp(12px, 1vw, 18px);
+        }
+
+        nav a:hover {
+            color: #cc0000;
+            transition: 0.3s;
+        }
+
+        /* ======================================================= */
+        /* SEÇÃO 1: BANNER PRINCIPAL                               */
+        /* ======================================================= */
+        .banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5vw;
+            height: calc(100vh - 40px - 60px);
+        }
+
+        .conteudo-esquerdo { max-width: 50vw; }
+
+        .subtitulo-topo {
+            color: #e8001c;
+            font-size: clamp(30px, 4vw, 75px);
+            font-weight: bold;
+            margin-bottom: 8vh;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        h1 {
+            font-size: clamp(25px, 3vw, 55px);
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 1.5vh;
+        }
+
+        p {
+            font-size: clamp(10px, 1.5vw, 23px);
+            color: #cccccc;
+            margin-bottom: 2vh;
+        }
+
+        button {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 1.2vh 3vw;
+            font-size: clamp(12px, 1vw, 16px);
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: white;
+            color: #1a0000;
+            transition: 0.3s;
+        }
+
+        .conteudo-direito {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .decoracao {
+            position: relative;
+            width: 38vw;
+            height: 38vw;
+        }
+
+        .foto-pessoa {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        .arco {
+            position: absolute;
+            width: 8vw;
+            height: 8vw;
+            border: 1.2vw solid #ff3333;
+            border-radius: 50%;
+        }
+
+        .arco-cima {
+            top: -1.5vw;
+            right: -1.5vw;
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+            transform: rotate(30deg);
+        }
+
+        .arco-baixo {
+            bottom: -2vw;
+            left: -2vw;
+            border-top-color: transparent;
+            border-right-color: transparent;
+            transform: rotate(30deg);
+        }
+
+        .circulo {
+            position: absolute;
+            width: 33vw;
+            height: 33vw;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #8b0000;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .circulo.girando {
+            transform: translate(-50%, -50%) rotateY(90deg);
+        }
+
+        /* ======================================================= */
+        /* SEÇÃO 2: CARROSSEL DE CARTÕES                           */
+        /* ======================================================= */
+        .secao-cartoes {
+            position: relative;
+            background-color: #fbecec;
+            padding: 5vh 5vw 2vh 5vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 100vh;
+            overflow: hidden;
+            transition: background 1s ease;
+        }
+
+        .logo-fundo {
+            position: absolute;
+            top: 70px;
+            left: -100px;
+            width: 600px;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .titulo-cartoes, .carrosel-container {
+            position: relative;
+            z-index: 3;
+        }
+
+        .titulo-cartoes {
+            text-align: right;
+            margin-bottom: 0;
+        }
+
+        .titulo-cartoes h2 {
+            color: #ff3333;
+            font-size: clamp(30px, 4vw, 60px);
+            line-height: 1.1;
+        }
+
+        .carrosel-container {
+            width: 100%;
+            cursor: grab;
+            overflow-x: scroll;
+            overflow-y: visible;
+            scrollbar-width: none;
+        }
+
+        .carrosel-container::-webkit-scrollbar { display: none; }
+        .carrosel-container:active { cursor: grabbing; }
+
+        .carrosel-track {
+            display: flex;
+            gap: 20px;
+            width: max-content;
+            padding: 60px 40px 20px 40px;
+        }
+
+        .cartao-item {
+            background-color: #e62030;
+            width: 300px;
+            height: 350px;
+            border-radius: 5px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        .cartao-item:hover {
+            transform: scale(1.15);
+            box-shadow: 0 25px 40px rgba(0,0,0, 0.5);
+            border: 2px solid #8b0000;
+            z-index: 10;
+        }
+
+        .cartao-item:hover img {
+            transform: scale(1.2);
+            transition: transform 0.4s ease;
+        }
+
+        .cartao-item img {
+            width: 90%;
+            margin-bottom: 90px;
+            pointer-events: none;
+            display: block;
+            max-height: 160px;
+            object-fit: contain;
+        }
+
+        .cartao-item p {
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 0;
+        }
+
+        /* Efeitos Cartão Ativo */
+        .cartao-item.ativo {
+            height: auto;
+            min-height: 350px;
+            transform: scale(1.12);
+            transform-origin: center center;
+            z-index: 1000;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+            border: 2px solid white;
+            overflow: visible;
+            transition: transform 0.3s ease;
+        }
+
+        .cartao-item.ativo p { color: #eeff00; }
+        .cartao-item .botoes-hover { display: none; }
+        .cartao-item.ativo .botoes-hover {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .secao-cartoes.fundo-ativo .titulo-cartoes span {
+            color: white !important;
+        }
+
+        /* Animações e Modal Cartões */
+        .modal-cartao {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 99999;
+            background-image: url('imagens/vader-fundo.jpg');
+            background-size: cover;
+            background-position: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .conteudo-modal {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .conteudo-modal img { width: 350px; max-width: 80vw; }
+        .botoes-modal { display: flex; gap: 15px; justify-content: center; }
+        .btn-acao {
+            background: black;
+            color: white;
+            border: 1px solid white;
+            padding: 15px 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        @keyframes vaderEntrar {
+            0%   { opacity: 0; top: 20%; }
+            100% { opacity: 0.9; top: 35%; }
+        }
+
+        .vader-fundo.animando {
+            animation: vaderEntrar 1.2s ease-out forwards;
+        }
+
+        @keyframes fundoAparecer {
+            0%   { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .secao-cartoes.fundo-ativo {
+            animation: fundoAparecer 1s ease-out forwards;
+        }
+
+        /* ======================================================= */
+        /* MODO ACESSIBILIDADE: DALTONISMO                         */
+        /* ======================================================= */
+        body.modo-daltonismo {
+            background: radial-gradient(ellipse at 100% 40%, #003366 0%, #001122 50%);
+        }
+
+        body.modo-daltonismo .barra-login,
+        body.modo-daltonismo .btn-ok,
+        body.modo-daltonismo .circulo {
+            background-color: #004080;
+        }
+
+        body.modo-daltonismo .cartao-item {
+            background-color: #00509e;
+        }
+
+        body.modo-daltonismo .btn-acessibilidade {
+            background-color: #00509e !important;
+        }
+
+        body.modo-daltonismo .subtitulo-topo,
+        body.modo-daltonismo .titulo-cartoes h2,
+        body.modo-daltonismo #modalCpfSenha h3,
+        body.modo-daltonismo nav a:hover,
+        body.modo-daltonismo .como-usar:hover,
+        body.modo-daltonismo .login-direito a:hover,
+        body.modo-daltonismo #modalCpfSenha button[onclick="fecharModal()"] {
+            color: #66b3ff;
+        }
+
+        body.modo-daltonismo .arco { border-color: #66b3ff; }
+        body.modo-daltonismo .cartao-item:hover { border-color: #002244; }
+        body.modo-daltonismo .input-login:hover, 
+        body.modo-daltonismo .input-digito:hover { outline-color: #66b3ff; }
+        body.modo-daltonismo #modalCpfSenha button[onclick="confirmarLogin()"] { background: #004080; }
+
+        .btn-acessibilidade:hover {
+            background-color: white !important;
+            color: #cc0000 !important;
+            transition: 0.3s;
+        }
+
+        /* ======================================================= */
+        /* SEÇÃO 3: PARA VOCÊ (MOTIVOS)                            */
+        /* ======================================================= */
+        .secao-para-voce {
+            background-color: #fbecec;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8vh 5vw;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .mancha-vermelha-topo {
+            position: absolute;
+            top: 0; left: 0;
+            width: clamp(150px, 20vw, 300px);
+            z-index: 1;
+        }
+
+        .mancha-vermelha-fundo {
+            position: absolute;
+            bottom: 0; right: 0;
+            width: clamp(150px, 20vw, 300px);
+            z-index: 1;
+        }
+
+        .titulo-para-voce {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 60px;
+        }
+
+        .titulo-para-voce h2 {
+            color: #e62030;
+            font-size: clamp(35px, 4vw, 55px);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .titulo-para-voce p {
+            color: #1a1a1a !important;
+            font-size: clamp(18px, 2vw, 24px);
+            font-weight: bold;
+        }
+
+        .container-beneficios {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 4vw;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .item-beneficio {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 220px;
+            text-align: center;
+        }
+
+        .item-beneficio img {
+            width: 130px;
+            height: 130px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .item-beneficio img:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0px 15px 20px rgba(0, 0, 0, 0.4));
+        }
+
+        .item-beneficio span {
+            color: #000000;
+            font-weight: bold;
+            font-size: clamp(16px, 1.2vw, 20px);
+            line-height: 1.3;
+        }
+
+        #icone-cartao {
+            width: 170px;
+            height: 170px;
+            margin-top: -23px;
+            margin-bottom: 5px;
+        }
+
+        body.modo-daltonismo .secao-para-voce { background-color: #e6f0fa; }
+        body.modo-daltonismo .titulo-para-voce h2 { color: #00509e; }
+
+        /* ======================================================= */
+        /* SEÇÃO 4: PARA EMPRESAS                                  */
+        /* ======================================================= */
+        .secao-empresas {
+            background-color: #fbecec;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8vh 5vw;
+            position: relative;
+            text-align: center;
+        }
+
+        .titulo-empresas { margin-bottom: 60px; }
+
+        .titulo-empresas h2 {
+            color: #e62030;
+            font-size: clamp(35px, 4vw, 55px);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .secao-empresas p {
+            color: #333333 !important;
+            font-size: clamp(18px, 2vw, 24px);
+            font-weight: bold;
+        }
+
+        .container-beneficios-empresas {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 4vw;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .item-empresa {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 220px;
+            text-align: center;
+        }
+
+        .item-empresa img {
+            width: 130px; 
+            height: 130px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .item-empresa img:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0px 15px 20px rgba(0, 0, 0, 0.4));
+        }
+
+        .item-empresa span {
+            color: #000000;
+            font-weight: bold;
+            font-size: clamp(16px, 1.2vw, 20px);
+            line-height: 1.3;
+        }
+
+        body.modo-daltonismo .secao-empresas { background-color: #f0f5ff; }
+        body.modo-daltonismo .titulo-empresas h2 { color: #00509e; }
+
+        /* ======================================================= */
+        /* SEÇÃO 5: BRADESCO SEGUROS                               */
+        /* ======================================================= */
+        .secao-seguros {
+            background-color: #fbecec;
+            min-height: 80vh;
+            padding: 8vh 5vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .titulo-seguros {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: -150px;
+        }
+
+        .titulo-seguros h2 {
+            color: #e62030;
+            font-size: clamp(35px, 4vw, 55px);
+            line-height: 1.1;
+        }
+
+        .titulo-seguros h2 span {
+            color: #8b0000;
+            background: linear-gradient(90deg, #ff4d4d 0%, #8b0000 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-size: 0.95em;
+        }
+
+        .container-seguros {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            gap: 4vw;
+        }
+
+        .coluna-seguros {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .centro-logo { flex-shrink: 0; }
+
+        .centro-logo img {
+            width: clamp(200px, 30vw, 450px);
+            object-fit: contain;
+            margin-top: 200px;
+        }
+
+        .item-seguro {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .item-seguro img {
+            width: 110px;
+            height: 110px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            object-fit: contain;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .item-seguro img:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.2));
+        }
+
+        .item-seguro span {
+            background-color: #8b0000;
+            color: #ffffff;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: clamp(12px, 1.1vw, 16px);
+            text-align: center;
+        }
+
+        body.modo-daltonismo .secao-seguros { background-color: #e6f0fa; }
+        body.modo-daltonismo .titulo-seguros h2 { color: #00509e; }
+        body.modo-daltonismo .titulo-seguros h2 span { color: #002244; }
+        body.modo-daltonismo .item-seguro span { background-color: #003366; }
+
+        /* ======================================================= */
+        /* SEÇÃO 6: MAPA E BUSCA CEP                               */
+        /* ======================================================= */
+        .secao-mapa {
+            background: linear-gradient(160deg, #e62030 45%, #fbecec 45%);
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8vh 5vw;
+        }
+
+        .container-mapa-layout {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            gap: 40px; 
+            align-items: stretch;
+        }
+
+        .mapa-esquerdo { flex: 1.2; }
+
+        .mapa-borda {
+            border: 15px solid #8b0000; 
+            height: 100%;
+            min-height: 550px; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            overflow: hidden; 
+            display: flex;
+        }
+
+        .mapa-borda iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            flex-grow: 1;
+        }
+
+        .mapa-direito {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .mapa-slideshow-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .titulo-slideshow {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            color: rgb(255, 255, 255);
+            z-index: 10;
+            font-size: clamp(20px, 1.8vw, 26px);
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+        }
+
+        .slide-imagem {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide-imagem.ativa { opacity: 1; }
+
+        .mapa-busca {
+            background-color: #d9d9d9;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-grow: 1; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .mapa-busca h4 {
+            color: #000;
+            font-size: clamp(20px, 1.8vw, 24px);
+            font-weight: normal;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .mapa-busca h4 span {
+            font-weight: bold;
+            border-bottom: 4px solid #8b0000; 
+            padding-bottom: 2px;
+        }
+
+        .linha-busca { display: flex; align-items: center; gap: 15px; }
+        .linha-busca label { color: #000; font-weight: bold; font-size: 28px; }
+        .linha-busca input {
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: none;
+            width: 250px;
+            font-size: 18px;
+            outline: none;
+        }
+
+        .mapa-carrossel {
+            background-color: #241b1b;
+            height: 250px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .mapa-carrossel h3 {
+            color: white;
+            font-size: clamp(20px, 2vw, 4px);
+            line-height: 1.-2;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .slideshow-agencias {
+            position: relative;
+            width: 100%;
+            height: 140px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .slideshow-agencias img {
+            position: absolute;
+            top: 0;
+            width: 220px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slideshow-agencias img.slide-ativo { opacity: 1; }
+
+        /* ======================================================= */
+        /* RESPONSIVIDADE (MEDIA QUERIES)                          */
+        /* ======================================================= */
+        @media (max-width: 1400px) {
+            .cartao-item {
+                width: 240px;
+                height: 290px;
+                padding: 15px;
+            }
+            .cartao-item img {
+                max-height: 120px;
+                margin-bottom: 60px;
+            }
+            .cartao-item.ativo { min-height: 290px; }
+
+            .container-beneficios, .container-beneficios-empresas { gap: 2vw; }
+            .item-beneficio img, .item-empresa img { width: 100px; height: 100px; }
+            #icone-cartao { width: 130px; height: 130px; margin-top: -15px; }
+            .item-beneficio span, .item-empresa span { font-size: clamp(14px, 1.1vw, 18px); }
+
+            .container-seguros { gap: 2vw; }
+            .centro-logo img { width: clamp(180px, 25vw, 350px); margin-top: 100px; }
+            .item-seguro img { width: 85px; height: 85px; padding: 15px; }
+            .item-seguro span { padding: 8px 20px; font-size: clamp(11px, 1vw, 14px); }
+            .titulo-seguros { margin-bottom: -80px; }
+        }
+
+        @media (max-width: 992px) {
+            .container-seguros { flex-direction: column; gap: 40px; }
+            .centro-logo img { margin-top: 0; order: -1; }
+            .titulo-seguros { margin-bottom: 20px; }
+        }
+
+
+      /* ======================================================= */
+        /* EFEITO DE EXPANSÃO: RETÂNGULO ATRÁS DO SEGURO           */
+        /* ======================================================= */
+        .item-seguro {
+            position: relative; 
+            z-index: 2; 
+        }
+
+        .retangulo-detalhe {
+            display: none; 
+            position: absolute;
+            top: -20px; /* Ajuste fino para alinhar o topo certinho com a bolinha */
+            height: 220px; /* Altura do retângulo vermelho */
+            background-color: #e62030; 
+            border-radius: 12px;
+            z-index: -1; 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            align-items: center; /* Centraliza a imagem verticalmente (cima/baixo) */
+            cursor: default; 
+        }
+
+        /* Ajuste para a Coluna da Esquerda (cresce para a direita) */
+        .coluna-esquerda .retangulo-detalhe {
+            left: -20px;
+            width: 680px; /* Largura total do banner */
+            padding-left: 200px; /* Pula exatamente o espaço da bolinha redonda */
+            padding-right: 20px; 
+            justify-content: center; /* Centraliza a imagem no espaço que sobrou */
+        }
+
+        /* Ajuste para a Coluna da Direita (cresce para a esquerda) */
+        .coluna-direita .retangulo-detalhe {
+            right: -20px;
+            width: 680px;
+            padding-right: 200px; 
+            padding-left: 20px;
+            justify-content: center;
+        }
+
+        /* ======================================================= */
+        /* TAMANHO EXATO DA IMAGEM DENTRO DO RETÂNGULO             */
+        /* ======================================================= */
+        .retangulo-detalhe img.img-detalhe {
+            background-color: transparent !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            height: 180px !important; /* Força a imagem a ficar bem grande */
+            width: 100% !important; /* Deixa ela se espalhar horizontalmente... */
+            max-width: 440px !important; /* ...mas limitando para não esticar demais */
+            object-fit: contain !important; /* Encaixa a imagem sem cortar e sem virar "ovo" */
+            margin: 0 !important; 
+        }
+
+        /* Quando o item recebe a classe "ativo", mostra o retângulo */
+        .item-seguro.ativo .retangulo-detalhe {
+            display: flex;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    
+    <div class="barra-login">
+        <div class="login-esquerdo">
+            <img src="imagens/icone-bradesco.png" alt="icone" style="width: 18px; height: 18px; filter: brightness(0) invert(1);">
+            <span>ACESSAR SUA CONTA</span>
+            <div class="separador"></div>
+            <label>Agência: <input type="number" class="input-login" id="agencia" maxlength="4" placeholder="0000" oninput="limitarDigitos(this, 4)"></label>
+            <label>Conta: <input type="number" class="input-login" id="conta" maxlength="7" placeholder="0000000" oninput="limitarDigitos(this, 7)"></label>
+            <input type="number" class="input-digito" id="digito" maxlength="1" placeholder="0" oninput="limitarDigitos(this, 1)">
+            <button class="btn-ok" onclick="validar()">OK</button>
+            <label><input type="checkbox"> Lembrar-me</label>
+            <span class="como-usar" onclick="abrirModalVideo()">COMO USAR ›</span>
+        </div>
+
+        <div id="menuAcessibilidade" style="display:none; position:fixed; top:45px; right:20px; background:#3d0000; border-radius:16px; padding:16px; z-index:9999; box-shadow:0 4px 20px rgba(0,0,0,0.5);">
+            <p style="text-align:center; font-weight:bold; font-size:13px; letter-spacing:2px; margin-bottom:12px; color:white;">ACESSIBILIDADE</p>
+            
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; width:280px;">
+                <button class="btn-acessibilidade" onclick="ativarLibras(event)" style="background:#e62030; border:none; border-radius:12px; padding:14px 10px; color:white; font-weight:bold; font-size:12px; letter-spacing:1px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    WEB LIBRAS 
+                </button>
+                <button class="btn-acessibilidade" onclick="ativarVoz(event)" style="background:#e62030; border:none; border-radius:12px; padding:14px 10px; color:white; font-weight:bold; font-size:12px; letter-spacing:1px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    VOZ 🎙️
+                </button>
+                <button class="btn-acessibilidade" onclick="ativarDaltonismo(event)" style="background:#e62030; border:none; border-radius:12px; padding:14px 10px; color:white; font-weight:bold; font-size:12px; letter-spacing:1px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    DALTONISMO 
+                </button>
+                <button class="btn-acessibilidade" onclick="event.stopPropagation()" style="background:#e62030; border:none; border-radius:12px; padding:14px 10px; color:white; font-weight:bold; font-size:12px; letter-spacing:1px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    PORTUGUÊS 🇧🇷
+                </button>
+                <button class="btn-acessibilidade" onclick="event.stopPropagation()" style="background:#e62030; border:none; border-radius:12px; padding:14px 10px; color:white; font-weight:bold; font-size:12px; letter-spacing:1px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    MAIS FERRAMENTAS
+                </button>
+                <button class="btn-acessibilidade" onclick="event.stopPropagation()" style="background:#e62030; border:none; border-radius:12px; padding:14px 10px; color:white; font-weight:bold; font-size:12px; letter-spacing:1px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    MAIS SOBRE
+                </button>
+            </div>
+        </div>
+
+        <div class="login-direito">
+            <a href="javascript:void(0)" onclick="abrirAcessibilidade(event)">Acessibilidade</a>
+            <img src="imagens/ace.png" alt="icone" style="width: 38px; height: 38px; filter: brightness(0) invert(1); margin-left: 15px;">
+        </div>
+    </div>
+
+    <header>
+        <img src="imagens/logo-bradesco.png" alt="Bradesco" class="logo">
+        <nav>
+            <a href="#secao-para-voce">Para você</a>
+            <a href="#secao-empresas">Para empresa</a>
+            <a href="#secao-seguros">Seguros</a>
+        </nav>
+    </header>
+
+    <div class="banner">
+        <div class="conteudo-esquerdo">
+            <p class="subtitulo-topo">Sua vida financeira <br> muito mais simples</p>
+            <h1>Abra sua conta</h1>
+            <p>Confira as melhores soluções de emprétimo</p>
+            <button type="button" onclick="window.location.href='saibamais.html';">SAIBA MAIS</button>
+        </div>
+
+        <div class="conteudo-direito">
+            <div class="decoracao">
+                <div class="arco arco-cima"></div>
+                <div class="arco arco-baixo"></div>
+                <div class="circulo">
+                    <img src="imagens/pessoa.jfif" alt="pessoa" class="foto-pessoa" id="foto-circulo">
+                </div>
+            </div>
+        </div>
+    </div> </div> </div> <section class="secao-cartoes" onclick="fecharModalCartao()">
+        <img src="imagens/banco-bradesco-fund.png" alt="Logo Fundo" class="logo-fundo">
+
+        <img src="imagens/vader-fundo.png" alt="" class="vader-fundo" 
+             style="display:none; position:absolute; top:35%; left:50%; transform: translate(-50%, -50%); width:40%; object-fit: contain; object-position: center; opacity:0.8; pointer-events:none; z-index:2;">
+
+        <div class="titulo-cartoes">
+            <h2>ENCONTRE<br><span style="color: black;">SEU CARTÃO AQUI</span></h2>
+        </div>
+        
+        <div class="carrosel-container" id="containerCarrosel">
+            <div class="carrosel-track" id="trackCarrosel">
+                
+                <div class="cartao-item" onclick="expandirCartao(this, event)">
+                    <img src="imagens/cartao-starwars.png" alt="Cartão">
+                    <p>Disney Signature<br>Star Wars</p>
+                    <div class="botoes-hover">
+                        <button>QUERO ESSE</button>
+                        <button>SAIBA MAIS</button>
+                    </div>
+                </div>
+
+                <div class="cartao-item" onclick="expandirCartao(this, event)">
+                    <img src="imagens/cartao-neo.png" alt="Cartão Neo">
+                    <p>Bradesco Neo Visa<br>Platinum</p>
+                    <div class="botoes-hover">
+                        <button>QUERO ESSE</button>
+                        <button>SAIBA MAIS</button>
+                    </div>
+                </div>
+
+                <div class="cartao-item" onclick="expandirCartao(this, event)">
+                    <img src="imagens/cartao-cinza.png" alt="Cartão Cinza">
+                    <p>Bradesco Visa<br>Signature</p>
+                    <div class="botoes-hover">
+                        <button>QUERO ESSE</button>
+                        <button>SAIBA MAIS</button>
+                    </div>
+                </div>
+
+                <div class="cartao-item" onclick="expandirCartao(this, event)">
+                    <img src="imagens/cartao-padrao.png" alt="Cartão Padrão">
+                    <p>Bradesco Visa<br>Platinum</p>
+                    <div class="botoes-hover">
+                        <button>QUERO ESSE</button>
+                        <button>SAIBA MAIS</button>
+                    </div>
+                </div>
+
+                <div class="cartao-item" onclick="expandirCartao(this, event)">
+                    <img src="imagens/cartao-Grafite.png" alt="Cartão Grafite">
+                    <p>Bradesco Elo<br>Grafite</p>
+                    <div class="botoes-hover">
+                        <button>QUERO ESSE</button>
+                        <button>SAIBA MAIS</button>
+                    </div>
+                </div>
+
+                <div class="cartao-item" onclick="expandirCartao(this, event)">
+                    <img src="imagens/cartao-Nanquim.png" alt="Cartão Nanquim">
+                    <p>Bradesco Elo<br>Nanquim</p>
+                    <div class="botoes-hover">
+                        <button>QUERO ESSE</button>
+                        <button>SAIBA MAIS</button>
+                    </div>
+                </div>
+
+                <div class="cartao-item" onclick="expandirCartao(this, event)">
+                    <img src="imagens/cartao-Mais.png" alt="Cartão Mais">
+                    <p>Bradesco Elo<br>Mais</p>
+                    <div class="botoes-hover">
+                        <button>QUERO ESSE</button>
+                        <button>SAIBA MAIS</button>
+                    </div>
+                </div>
+
+                <div class="cartao-item" onclick="expandirCartao(this, event)">
+                    <img src="imagens/cartao-Gold.png" alt="Cartão Gold">
+                    <p>American Express®<br>Gold Card</p>
+                    <div class="botoes-hover">
+                        <button>QUERO ESSE</button>
+                        <button>SAIBA MAIS</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="secao-para-voce" class="secao-para-voce">
+        <div class="titulo-para-voce">
+            <h2>Para Você!</h2>
+            <p>Veja o porque da Escolha</p>
+        </div>
+
+        <div class="container-beneficios">
+            <div class="item-beneficio">
+                <img src="imagens/rede.png" alt="Ícone Ampla Rede">
+                <span>Ampla Rede de<br>Atendimento:</span>
+            </div>
+            
+            <div class="item-beneficio">
+                <img src="imagens/saturn.png" alt="Ícone Ecossistema">
+                <span>Ecossistema<br>Completo:</span>
+            </div>
+
+            <div class="item-beneficio">
+                <img src="imagens/livelo.png" alt="Ícone Livelo">
+                <span>Programa de<br>Fidelidade<br>(Livelo):</span>
+            </div>
+
+            <div class="item-beneficio">
+                <img src="imagens/card.png" alt="Ícone Cartões" id="icone-cartao">
+                <span>Cartões de<br>Crédito<br>Variados:</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="secao-empresas" class="secao-empresas">
+        <div class="titulo-empresas">
+            <h2>Para Empresas!</h2>
+            <p>Soluções inteligentes para o seu negócio</p>
+        </div>
+
+        <div class="container-beneficios-empresas">
+            <div class="item-empresa">
+                <img src="imagens/roda.png" alt="Capital de Giro">
+                <span>Capital de Giro<br>Flexível:</span>
+            </div>
+            
+            <div class="item-empresa">
+                <img src="imagens/folha.png" alt="Folha de Pagamento">
+                <span>Gestão de Folha<br>de Pagamento:</span>
+            </div>
+
+            <div class="item-empresa">
+                <img src="imagens/maquina.png" alt="Maquininhas">
+                <span>Maquininhas com<br>Taxas Especiais:</span>
+            </div>
+
+            <div class="item-empresa">
+                <img src="imagens/pessoas.png" alt="Investimentos">
+                <span>Investimentos<br>Corporativos:</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="secao-seguros" class="secao-seguros">
+        <div class="titulo-seguros">
+            <h2>BRADESCO<br><span>SEGUROS</span></h2>
+        </div>
+
+     <div class="container-seguros">
+            <div class="coluna-seguros coluna-esquerda">
+                <div class="item-seguro" onclick="abrirDetalhe(this, 'imagens/segv.png', event)" style="cursor: pointer;">
+                    <img src="imagens/peaple.png" alt="Seguro de Vida">
+                    <span>Seguro de Vida</span>
+                    <div class="retangulo-detalhe" onclick="event.stopPropagation()">
+                        <img src="" class="img-detalhe" alt="Detalhe do Seguro">
+                    </div>
+                </div>
+                
+                <div class="item-seguro" onclick="abrirDetalhe(this, 'imagens/segcar.png', event)" style="cursor: pointer;">
+                    <img src="imagens/car.png" alt="Seguro Auto">
+                    <span>Seguro Auto</span>
+                    <div class="retangulo-detalhe" onclick="event.stopPropagation()">
+                        <img src="" class="img-detalhe" alt="Detalhe do Seguro">
+                    </div>
+                </div>
+                
+                <div class="item-seguro" onclick="abrirDetalhe(this, 'imagens/segca.png', event)" style="cursor: pointer;">
+                    <img src="imagens/predio.png" alt="Seguro Residencial">
+                    <span>Seguro Residencial</span>
+                    <div class="retangulo-detalhe" onclick="event.stopPropagation()">
+                        <img src="" class="img-detalhe" alt="Detalhe do Seguro">
+                    </div>
+                </div>
+            </div>
+
+            <div class="centro-logo">
+                <img src="imagens/banco-bradesco-fund.png" alt="Logo Bradesco Seguros Central">
+            </div>
+
+            <div class="coluna-seguros coluna-direita">
+                <div class="item-seguro" onclick="abrirDetalhe(this, 'imagens/segse.png', event)" style="cursor: pointer;">
+                    <img src="imagens/doutor.png" alt="Seguro Saúde">
+                    <span>Seguro Saúde</span>
+                    <div class="retangulo-detalhe" onclick="event.stopPropagation()">
+                        <img src="" class="img-detalhe" alt="Detalhe do Seguro">
+                    </div>
+                </div>
+                
+                <div class="item-seguro" onclick="abrirDetalhe(this, 'imagens/segd.png', event)" style="cursor: pointer;">
+                    <img src="imagens/dente.png" alt="Seguro Dental">
+                    <span>Seguro Dental</span>
+                    <div class="retangulo-detalhe" onclick="event.stopPropagation()">
+                        <img src="" class="img-detalhe" alt="Detalhe do Seguro">
+                    </div>
+                </div>
+                
+                <div class="item-seguro" onclick="abrirDetalhe(this, 'imagens/segvi.png', event)" style="cursor: pointer;">
+                    <img src="imagens/aviao.png" alt="Seguro Viagem">
+                    <span>Seguro Viagem</span>
+                    <div class="retangulo-detalhe" onclick="event.stopPropagation()">
+                        <img src="" class="img-detalhe" alt="Detalhe do Seguro">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        
+    </div>
+    </section>
+
+    <section class="secao-mapa">
+        <div class="container-mapa-layout">
+            
+            <div class="mapa-esquerdo">
+                <div class="mapa-borda">
+                    <iframe 
+                        id="iframe-mapa"
+                        src="https://maps.google.com/maps?q=Bradesco+São+Paulo&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+
+            <div class="mapa-direito">
+                <div class="mapa-slideshow-container">
+                    <h3 class="titulo-slideshow">Encontre a agência<br>mais próxima de você!</h3>
+                    <img src="imagens/bra.png" alt="Agência 1" class="slide-imagem ativa">
+                    <img src="imagens/brad.jpeg" alt="Agência 2" class="slide-imagem">
+                    <img src="imagens/brade.jpeg" alt="Agência 3" class="slide-imagem">
+                </div>
+
+                <div class="mapa-busca">
+                    <h4>Encontre o Bradesco<br><span>mais perto de você!</span></h4>
+                    <div class="linha-busca">
+                        <label>CEP</label>
+                        <input type="text" id="input-cep" placeholder="Digite e aperte Enter" maxlength="9">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div id="modalCpfSenha" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; color: black; padding: 30px; border-radius: 8px; display: flex; flex-direction: column; gap: 15px; width: 300px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+            <h3 style="color: #cc0000; text-align: center; margin-bottom: 10px;">Confirme seus dados</h3>
+            
+            <label style="font-weight: bold; font-size: 14px;">CPF:</label>
+            <input type="text" id="loginCpf" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            
+            
+            <label style="font-weight: bold; font-size: 14px;">Senha:</label>
+            <input type="password" id="loginSenha" maxlength="6" placeholder="Sua senha de 6 dígitos" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            
+            <button onclick="confirmarLogin()" style="background: #cc0000; color: white; padding: 12px; border: none; cursor: pointer; border-radius: 4px; font-weight: bold; margin-top: 10px;">ENTRAR</button>
+            <button onclick="fecharModal()" style="background: transparent; color: #cc0000; border: none; cursor: pointer; text-decoration: underline; font-size: 14px;">Cancelar</button>
+        </div>
+    </div>
+
+
+<div id="modalVideo" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; justify-content: center; align-items: center;" onclick="fecharModalVideo()">
+    
+    <div style="background: #a31515; padding: 25px; border-radius: 18px; width: 65vw; max-width: 800px; box-shadow: 0 15px 40px rgba(0,0,0,0.8); position: relative;" onclick="event.stopPropagation()">
+        
+        <div style="position: absolute; top: 8px; right: 15px;">
+            <span onclick="fecharModalVideo()" style="color: white; font-weight: bold; cursor: pointer; font-size: 14px; opacity: 0.6;">X</span>
+        </div>
+
+        <video id="videoComoUsar" width="100%" muted autoplay playsinline style="border-radius: 8px; background: black; pointer-events: none; display: block;">
+            <source src="video/tutorial.mp4" type="video/mp4">
+        </video>
+    </div>
+</div>
+
+
+
+
+
+    <script>
+        // =========================================================================
+        // VALIDAÇÃO E LOGIN
+        // =========================================================================
+        function limitarDigitos(input, max) {
+            if (input.value.length > max) {
+                input.value = input.value.slice(0, max);
+            }
+        }
+
+        let clienteEncontradoNaAgencia = null;
+
+        function validar() {
+            const digAgencia = document.getElementById('agencia').value;
+            const digConta = document.getElementById('conta').value;
+            const digDigito = document.getElementById('digito').value;
+
+            if (digAgencia.length < 4 || digConta.length < 7 || digDigito.length < 1) {
+                alert('Preencha os campos de Agência, Conta e Dígito corretamente.');
+                return;
+            }
+
+            let listaClientes = JSON.parse(localStorage.getItem("listaClientes")) || [];
+
+            clienteEncontradoNaAgencia = listaClientes.find(function(cliente) {
+                return cliente.agencia === digAgencia && 
+                       cliente.conta === digConta && 
+                       cliente.digito === digDigito;
+            });
+
+            if (clienteEncontradoNaAgencia) {
+                document.getElementById('modalCpfSenha').style.display = 'flex';
+            } else {
+                alert('Conta não encontrada! Verifique seus dados.');
+            }
+        }
+
+        function fecharModal() {
+            document.getElementById('modalCpfSenha').style.display = 'none';
+            document.getElementById('loginCpf').value = ''; 
+            document.getElementById('loginSenha').value = '';
+        }
+
+        function confirmarLogin() {
+            const digCpf = document.getElementById('loginCpf').value;
+            const digSenha = document.getElementById('loginSenha').value;
+
+            if (clienteEncontradoNaAgencia.cpf === digCpf && clienteEncontradoNaAgencia.senha === digSenha) {
+                sessionStorage.setItem("clienteLogado", JSON.stringify(clienteEncontradoNaAgencia));
+                window.location.href = 'conta.html'; 
+            } else {
+                alert('CPF ou Senha incorretos!');
+            }
+        }
+
+
+
+        // =========================================================================
+        // MÁSCARA AUTOMÁTICA DE CPF
+        // =========================================================================
+        function mascaraCPF(campo) {
+            // Remove tudo o que não for número (impede de digitar letras)
+            let cpf = campo.value.replace(/\D/g, "");
+            
+            // Coloca os pontos e o traço nas posições certas
+            cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
+            cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
+            cpf = cpf.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+            
+            // Atualiza o que aparece na tela
+            campo.value = cpf;
+        }
+
+
+
+// =========================================================================
+// MODAL DE VÍDEO (PLAYLIST CONTÍNUA)
+// =========================================================================
+
+// Nome exato dos seus 3 vídeos salvos na pasta 'video'
+const playlistVideos = [
+    'video/tutorial.mp4',
+    'video/acessibilidade.mp4',
+    'video/login.mp4'
+];
+
+let videoAtual = 0; 
+const playerVideo = document.getElementById('videoComoUsar');
+
+// Ouve quando o vídeo termina e passa para o próximo
+playerVideo.addEventListener('ended', function() {
+    videoAtual++; // Pula para a próxima posição
+    
+    // Se chegou no fim da lista (passou do 3º vídeo), volta pro zero
+    if (videoAtual >= playlistVideos.length) {
+        videoAtual = 0; 
+    }
+    
+    // Troca o arquivo e dá o play automático
+    playerVideo.src = playlistVideos[videoAtual];
+    playerVideo.play();
+});
+
+function abrirModalVideo() {
+    document.getElementById('modalVideo').style.display = 'flex';
+    
+    // Ao abrir a tela, garante que comece sempre do primeiro vídeo
+    videoAtual = 0;
+    playerVideo.src = playlistVideos[videoAtual];
+    playerVideo.play();
+}
+
+function fecharModalVideo() {
+    document.getElementById('modalVideo').style.display = 'none';
+    playerVideo.pause(); // Pausa para economizar memória quando escondido
+}
+
+
+
+
+
+
+        // =========================================================================
+        // ANIMAÇÃO BANNER PRINCIPAL (FOTOS CIRCULO)
+        // =========================================================================
+        const fotos = [
+            'imagens/pessoa.jfif',
+            'imagens/foto2.jpg',
+            'imagens/foto3.jpg'
+        ];
+
+        let indice = 0;
+        const circulo = document.querySelector('.circulo');
+        const foto = document.getElementById('foto-circulo');
+
+        setInterval(function() {
+            circulo.classList.add('girando');
+            setTimeout(function() {
+                indice = (indice + 1) % fotos.length;
+                foto.src = fotos[indice];
+                circulo.classList.remove('girando');
+            }, 600);
+        }, 14000);
+
+        // =========================================================================
+        // CARROSSEL DE CARTÕES (DRAG & DROP + MODAL)
+        // =========================================================================
+        const slider = document.getElementById('containerCarrosel');
+        let isDown = false;
+        let startX, scrollLeft, startScrollLeft;
+        let hasDragged = false; 
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            hasDragged = false;
+            startX = e.pageX - slider.offsetLeft;
+            startScrollLeft = slider.scrollLeft;
+            scrollLeft = slider.scrollLeft;
+            slider.style.cursor = 'grabbing';
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+        });
+
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+
+            if (Math.abs(slider.scrollLeft - startScrollLeft) > 5) {
+                hasDragged = true;
+            }
+        });
+
+        function expandirCartao(elemento, event) {
+            if (hasDragged) return;
+            event.stopPropagation();
+
+            const secao = document.querySelector('.secao-cartoes');
+            const vader = document.querySelector('.vader-fundo');
+            const jaEstaAtivo = elemento.classList.contains('ativo');
+            document.querySelectorAll('.cartao-item').forEach(c => c.classList.remove('ativo'));
+
+            if (jaEstaAtivo) {
+                secao.style.backgroundImage = 'none';
+                secao.style.backgroundColor = '#fbecec';
+                secao.classList.remove('fundo-ativo');
+                vader.style.display = 'none';
+                vader.classList.remove('animando');
+                return;
+            }
+
+            elemento.classList.add('ativo');
+            secao.style.backgroundImage = "url('imagens/calax.png')";
+            secao.style.backgroundSize = 'cover';
+            secao.style.backgroundPosition = 'center';
+            secao.classList.add('fundo-ativo');
+
+            const fundos = {
+                'Disney Signature\nStar Wars': 'imagens/calax.png',
+                'Bradesco Neo Visa\nPlatinum': 'imagens/azulr.png',
+                'Bradesco Visa\nSignature': 'imagens/cinzaa.png',
+                'Bradesco Visa\nPlatinum':     'imagens/florest.png',
+                'Bradesco Elo\nGrafite':       'imagens/city.png',
+                'Bradesco Elo\nNanquim':       'imagens/rosas.png',
+                'Bradesco Elo\nMais':          'imagens/ouro.png',
+                'American Express®\nGold Card':'imagens/grecia.png',
+            };
+
+            const nomeCartao = elemento.querySelector('p').innerText;
+            const fundoEscolhido = fundos[nomeCartao] || 'imagens/calax.png';
+
+            secao.style.backgroundImage = `url('${fundoEscolhido}')`;
+            secao.style.backgroundSize = 'cover';
+            secao.style.backgroundPosition = 'center';
+            secao.classList.add('fundo-ativo');
+
+            if (nomeCartao.includes('Star Wars')) {
+                vader.style.display = 'block';
+                vader.style.opacity = '0';
+                vader.classList.remove('animando');
+                void vader.offsetWidth;
+                vader.classList.add('animando');
+            } else {
+                vader.style.display = 'none';
+            }
+        }
+
+        function fecharModalCartao() {
+            const secao = document.querySelector('.secao-cartoes');
+            const vader = document.querySelector('.vader-fundo');
+            document.querySelectorAll('.cartao-item').forEach(c => c.classList.remove('ativo'));
+            secao.style.backgroundImage = 'none';
+            secao.style.backgroundColor = '#fbecec';
+            secao.classList.remove('fundo-ativo');
+            vader.style.display = 'none';
+            vader.classList.remove('animando');
+        }
+
+        // =========================================================================
+        // MENU DE ACESSIBILIDADE
+        // =========================================================================
+        function abrirAcessibilidade(event) {
+            event.stopPropagation();
+            const menu = document.getElementById('menuAcessibilidade');
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+        }
+
+        document.addEventListener('click', function() {
+            document.getElementById('menuAcessibilidade').style.display = 'none';
+        });
+
+        // =========================================================================
+        // NARRADOR DE ACESSIBILIDADE (VOZ)
+        // =========================================================================
+        let narradorAtivo = false;
+        const sinteseVoz = window.speechSynthesis;
+
+        function ativarVoz(event) {
+            event.stopPropagation(); 
+            narradorAtivo = !narradorAtivo; 
+
+            if (narradorAtivo) {
+                falar("Modo de voz ativado.");
+                const elementosLidaveis = document.querySelectorAll('h1, h2, h3, p, span, button, a, label');
+                elementosLidaveis.forEach(el => {
+                    el.addEventListener('mouseenter', lerElemento);
+                    el.addEventListener('focus', lerElemento); 
+                });
+            } else {
+                falar("Modo de voz desativado.");
+                setTimeout(() => sinteseVoz.cancel(), 2000); 
+                const elementosLidaveis = document.querySelectorAll('h1, h2, h3, p, span, button, a, label');
+                elementosLidaveis.forEach(el => {
+                    el.removeEventListener('mouseenter', lerElemento);
+                    el.removeEventListener('focus', lerElemento);
+                });
+            }
+        }
+
+        function falar(texto) {
+            sinteseVoz.cancel(); 
+            if (!texto || texto.trim() === "") return; 
+            let mensagem = new SpeechSynthesisUtterance(texto);
+            mensagem.lang = 'pt-BR'; 
+            mensagem.rate = 1.1; 
+            sinteseVoz.speak(mensagem);
+        }
+
+        function lerElemento(event) {
+            if (narradorAtivo) {
+                let textoParaLer = event.target.innerText;
+                falar(textoParaLer);
+            }
+        }
+
+        // =========================================================================
+        // ACESSIBILIDADE: DALTONISMO E LIBRAS
+        // =========================================================================
+        function ativarDaltonismo(event) {
+            event.stopPropagation(); 
+            const corpo = document.body;
+            corpo.classList.toggle('modo-daltonismo');
+            
+            if (narradorAtivo) {
+                if (corpo.classList.contains('modo-daltonismo')) {
+                    falar("Modo para daltonismo ativado. Cores ajustadas para tons de azul.");
+                } else {
+                    falar("Modo para daltonismo desativado. Cores originais restauradas.");
+                }
+            }
+        }
+
+        function ativarLibras(event) {
+            event.stopPropagation(); 
+            const botaoVlibrasNativo = document.querySelector('[vw-access-button]');
+            if (botaoVlibrasNativo) {
+                botaoVlibrasNativo.click();
+            }
+        }
+
+        // =========================================================================
+        // SLIDESHOW E MAPA INTERATIVO COM BUSCA POR CEP
+        // =========================================================================
+        let indiceSlideMap = 0;
+        const slidesMap = document.querySelectorAll('.slide-imagem');
+
+        if (slidesMap.length > 0) {
+            setInterval(() => {
+                slidesMap[indiceSlideMap].classList.remove('ativa');
+                indiceSlideMap = (indiceSlideMap + 1) % slidesMap.length;
+                slidesMap[indiceSlideMap].classList.add('ativa');
+            }, 3500); 
+        }
+
+        const inputCep = document.getElementById('input-cep');
+        const iframeMapa = document.getElementById('iframe-mapa');
+
+        if (inputCep && iframeMapa) {
+            inputCep.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); 
+                    let cepDigitado = inputCep.value.trim().replace(/[-\s]/g, '');
+
+                    if (cepDigitado.length === 8) {
+                        let novoLink = `https://maps.google.com/maps?q=Bradesco%20$${cepDigitado}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+                        iframeMapa.src = novoLink;
+                    } else {
+                        alert("Por favor, digite um CEP válido contendo 8 números.");
+                    }
+                }
+            });
+        }
+
+        // =========================================================================
+        // EXPANSÃO DA SEÇÃO DE SEGUROS
+        // =========================================================================
+        function abrirDetalhe(elemento, imagemSrc, event) {
+            // Impede que o clique feche a tela imediatamente
+            event.stopPropagation(); 
+            
+            // Fecha todos os outros retângulos que estiverem abertos
+            document.querySelectorAll('.item-seguro').forEach(item => {
+                item.classList.remove('ativo');
+            });
+
+            // Pega a tag de imagem dentro deste item específico e coloca a foto
+            const img = elemento.querySelector('.img-detalhe');
+            img.src = imagemSrc;
+
+            // Adiciona a classe 'ativo' para fazer o retângulo aparecer
+            elemento.classList.add('ativo');
+        }
+
+        // Se clicar em qualquer outro lugar do site, fecha os retângulos
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.item-seguro').forEach(item => {
+                item.classList.remove('ativo');
+            });
+        });
+
+
+
+
+    </script>
+
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+
+</body>
+</html>

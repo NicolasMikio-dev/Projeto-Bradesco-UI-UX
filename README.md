@@ -14,7 +14,7 @@ Pré-requisitos:
 * Opcional: Extensão "Live Server" no VS Code para visualizar atualizações em tempo real.
 
 Como executar:
-1. Clone o repositório: `(https://github.com/AlisonMeloDev/Projeto-Bradesco-Anhembi-Morumbi-A3 )`
+1. Clone o repositório: `(https://github.com/NicolasMikio-dev/Projeto-Bradesco-UI-UX.git)`
 2. Abra a pasta do projeto.
 3. Dê um duplo clique no arquivo `index.html` para abri-lo no seu navegador.
 

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bradesco - Abra sua conta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: white;
+            color: black;
+        }
+
+        header {
+            background-color: #cc0000;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-header {
+            width: 50px;
+            filter: brightness(0) invert(1);
+        }
+
+        .container {
+    display: flex;
+    height: calc(100vh - 60px);
+}
+
+.lado-esquerdo {
+    width: 45%;
+    position: relative;
+    /* 1. Muda o fundo para o vermelho escuro do banco */
+    background-color: #e8001c; 
+    /* 2. Corta o container inteiro na diagonal da direita */
+    clip-path: polygon(0 0, 100% 0, 75% 100%, 0 100%);
+}
+
+.lado-direito {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+   /* A ordem do padding é: Cima | Direita | Baixo | Esquerda */
+    padding: 60px 190px 60px 60px; /* Aumentei o lado direito para 150px */
+}
+
+h1 {
+    color: #e8001c;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: right;
+    margin-bottom: 40px;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    align-items: flex-end;
+}
+
+.campo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.campo label {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+    min-width: 200px;
+}
+
+.campo input {
+    width: 280px;
+    padding: 8px 0;
+    border: none;
+    border-bottom: 2px solid black;
+    font-size: 16px;
+    outline: none;
+
+}
+
+.btn-proximo {
+    background-color: #e8001c;
+    color: white;
+    border: none;
+    padding: 18px 80px;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+
+.btn-proximo:hover {
+    background-color: #b0001a;
+    transition: 0.3s;
+}
+
+
+
+.foto-formulario {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    /* 3. Corta a imagem um pouco menor que o container */
+    /* O "15% 0" cria aquele triângulo vermelho no topo esquerdo! */
+    /* O "92% 0" e "67% 100%" criam a borda grossa vermelha na direita */
+    clip-path: polygon(0 0, 92% 0, 67% 100%, 0 100%);
+}
+
+        
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="imagens/icone-bradesco.png" alt="Bradesco" class="logo-header">
+    </header>
+
+<div class="container">
+
+
+    <div class="lado-esquerdo">
+    <img src="imagens/puff.png" alt="pessoa" class="foto-formulario">
+    
+</div>
+
+
+    <div class="lado-direito">
+        <h1>Preencha seus <br> dados pessoais</h1>
+        <div class="formulario">
+    <div class="campo">
+        <label>nome</label>
+        <input type="text" id="nome">
+    </div>
+    <div class="campo">
+        <label>data de nascimento</label>
+        <input type="text" id="nascimento" placeholder="DD/MM/AAAA" maxlength="10">
+    </div>
+    <div class="campo">
+        <label>telefone</label>
+        <input type="tel" id="telefone">
+    </div>
+    <div class="campo">
+        <label>cpf</label>
+        <input type="text" id="cpf">
+    </div>
+    
+    <button class="btn-proximo">PRÓXIMO</button>
+</div>
+    </div>
+    
+</div>
+
+<script>
+    document.getElementById('cpf').addEventListener('input', function(e) {
+        let v = e.target.value.replace(/\D/g, '')
+        v = v.substring(0, 11)
+        v = v.replace(/(\d{3})(\d)/, '$1.$2')
+        v = v.replace(/(\d{3})(\d)/, '$1.$2')
+        v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+        e.target.value = v
+    })
+
+    document.getElementById('telefone').addEventListener('input', function(e) {
+        let v = e.target.value.replace(/\D/g, '')
+        v = v.substring(0, 11)
+        v = v.replace(/(\d{2})(\d)/, '($1) $2')
+        v = v.replace(/(\d{5})(\d)/, '$1-$2')
+        e.target.value = v
+    })
+
+  // Seleciona o botão PRÓXIMO e o campo de nascimento
+    const btnProximo = document.querySelector('.btn-proximo');
+    const inputNascimento = document.getElementById('nascimento');
+
+    // Cria a ação de clique no botão
+    btnProximo.addEventListener('click', function(e) {
+        
+        const valorData = inputNascimento.value;
+        const inputNome = document.getElementById('nome').value;
+        const inputTelefone = document.getElementById('telefone').value;
+        const inputCpf = document.getElementById('cpf').value;
+
+        // Verifica se preencheu tudo
+        if (valorData.length < 10 || inputNome === "" || inputTelefone === "" || inputCpf === "") {
+            alert('Por favor, preencha todos os campos corretamente.');
+            e.preventDefault();
+            return; 
+        }
+
+        // Divide a data de "DD/MM/AAAA" para números
+        const partes = valorData.split('/');
+        const dia = parseInt(partes[0], 10);
+        const mes = parseInt(partes[1], 10);
+        const ano = parseInt(partes[2], 10);
+
+        // Validação do Calendário (Mês até 12, Dia até 31)
+        if (mes < 1 || mes > 12 || dia < 1 || dia > 31) {
+            alert('Data inválida!');
+            e.preventDefault();
+            return;
+        }
+
+        // Verifica se o dia existe NAQUELE mês específico
+        const diasNoMes = new Date(ano, mes, 0).getDate();
+        if (dia > diasNoMes) {
+            alert('Data inválida!');
+            e.preventDefault();
+            return;
+        }
+
+        const dataNascimento = new Date(ano, mes - 1, dia);
+        const dataAtual = new Date();
+
+        let idade = dataAtual.getFullYear() - dataNascimento.getFullYear();
+        const diferencaMes = dataAtual.getMonth() - dataNascimento.getMonth();
+
+        if (diferencaMes < 0 || (diferencaMes === 0 && dataAtual.getDate() < dataNascimento.getDate())) {
+            idade--;
+        }
+
+        // Bloqueia menor de 18 anos
+        if (idade < 18) {
+            alert('Não possui idade mínima.');
+            e.preventDefault();
+            return;
+        }
+
+        // ==========================================
+        // SE CHEGOU AQUI, ESTÁ TUDO CERTO!
+        // ==========================================
+        
+        // 1. Salva os dados na memória do navegador (localStorage)
+        localStorage.setItem('cadastroNome', inputNome);
+        localStorage.setItem('cadastroData', valorData);
+        localStorage.setItem('cadastroTelefone', inputTelefone);
+        localStorage.setItem('cadastroCpf', inputCpf);
+
+        // 2. Redireciona para a página de senha
+        // Atenção: O arquivo HTML da senha precisa ter exatamente este nome e estar na mesma pasta!
+        window.location.href = 'senha.html';
+    });
+    // Máscara para a Data de Nascimento (DD/MM/AAAA)
+    document.getElementById('nascimento').addEventListener('input', function(e) {
+        let v = e.target.value.replace(/\D/g, ''); // Tira tudo que não é número
+        v = v.substring(0, 8); // Trava em 8 dígitos (DDMMAAAA)
+        v = v.replace(/(\d{2})(\d)/, '$1/$2'); // Coloca a primeira barra
+        v = v.replace(/(\d{2})(\d)/, '$1/$2'); // Coloca a segunda barra
+        e.target.value = v;
+    });
+
+    // Máscara para o Nome: Não permite a digitação de números
+    document.getElementById('nome').addEventListener('input', function(e) {
+        // A expressão /[0-9]/g procura por qualquer número de 0 a 9 e substitui por vazio ('')
+        e.target.value = e.target.value.replace(/[0-9]/g, '');
+    });
+</script>
+</body>
+</html>
